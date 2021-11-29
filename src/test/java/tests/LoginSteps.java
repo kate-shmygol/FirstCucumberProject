@@ -91,7 +91,7 @@ public class LoginSteps {
 		type(By.cssSelector("input:nth-child(4)"), "adam" + i + "@gm.com");
 		type(By.cssSelector("input:nth-child(5"), "Koblenz");
 		type(By.cssSelector("input:nth-child(6)"), "torwart");
-		clickWithAction(By.cssSelector(".add_form__2rsm2 button"));
+		clickWithActions(By.cssSelector(".add_form__2rsm2 button"));
 	}
 
 	@Then("Created a new contact")
@@ -132,7 +132,7 @@ public class LoginSteps {
 		}
 	}
 
-	public void clickWithAction(By save) {
+	public void clickWithActions(By save) {
 		Actions action = new Actions(driver);
 		WebElement element = driver.findElement(save);
 		action.moveToElement(element).build().perform();
