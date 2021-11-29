@@ -9,11 +9,14 @@ import org.junit.runner.RunWith;
 //		tags = "@loginPage",
 //		tags = "not @loginPage",
 //		tags = "@loginPage or @validData",
-		tags = "@invalidData",
+//		tags = "@invalidData",
+		tags = "@addContact",
+
 		plugin = {
 				"pretty",
 				"json:build/cucumber-report/cucumber.json"
 		}
 )
 public class RunTests {
+
 }

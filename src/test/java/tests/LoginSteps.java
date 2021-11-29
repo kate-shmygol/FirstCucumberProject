@@ -9,7 +9,9 @@ import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -35,7 +37,7 @@ public class LoginSteps {
 	@Then("Appear LoginRegistration form")
 	public void isLoginRegistrationFormPresent() {
 		Assert.assertTrue(isElementPresent(By.cssSelector(".login_login__3EHKB")));
-		driver.quit();
+//		driver.quit();
 	}
 
 	@And("Enter a valid data")
@@ -53,7 +55,7 @@ public class LoginSteps {
 	public void isSignOutTabDisplayed() throws InterruptedException {
 		Thread.sleep(2000);
 		Assert.assertTrue(isElementPresent(By.xpath("//button[contains(.,'Sign Out')]")));
-		driver.quit();
+//		driver.quit();
 	}
 
 	@And("Enter a valid email and an invalid password")
@@ -70,7 +72,37 @@ public class LoginSteps {
 	public void alertAppeared() throws InterruptedException {
 		Thread.sleep(2000);
 		Assert.assertTrue(isAlertPresent());
-		driver.quit();
+//		driver.quit();
+	}
+
+	@And("Click on Add tab")
+	public void clickOnAddTab() throws InterruptedException {
+		Thread.sleep(3000);
+		click(By.cssSelector("a:nth-child(5)"));
+	}
+
+	@And("Add new contact")
+	public void addNewContact() {
+		int i = (int) ((System.currentTimeMillis()) / 1000) % 3600;
+
+		type(By.cssSelector("[placeholder='Name']"), "Karl");
+		type(By.cssSelector("input:nth-child(2)"), "Adam");
+		type(By.cssSelector("input:nth-child(3)"), "12345" + i);
+		type(By.cssSelector("input:nth-child(4)"), "adam" + i + "@gm.com");
+		type(By.cssSelector("input:nth-child(5"), "Koblenz");
+		type(By.cssSelector("input:nth-child(6)"), "torwart");
+		clickWithAction(By.cssSelector(".add_form__2rsm2 button"));
+	}
+
+	@Then("Created a new contact")
+	public boolean isCreatedNewContact() {
+		List<WebElement> contacts = driver.findElements(By.xpath("//h2"));
+		for (WebElement el : contacts) {
+			if (el.getText().contains("Karl")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void click(By locator) {
@@ -98,5 +130,12 @@ public class LoginSteps {
 			alert.accept();
 			return true;
 		}
+	}
+
+	public void clickWithAction(By save) {
+		Actions action = new Actions(driver);
+		WebElement element = driver.findElement(save);
+		action.moveToElement(element).build().perform();
+		element.click();
 	}
 }

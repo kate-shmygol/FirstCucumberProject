@@ -1,4 +1,4 @@
-Feature:
+Feature: Login
 
   @validData
   Scenario: Login with valid data
